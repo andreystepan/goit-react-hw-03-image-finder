@@ -1,13 +1,15 @@
 import { Searchbar } from './Searchbar';
+import { Component } from 'react';
 
-export const App = () => {
+export class App extends Component {
   state = {
     query: '',
   };
-
-  return (
-    <div>
-      <Searchbar />
-    </div>
-  );
-};
+  render() {
+    return (
+      <div>
+        <Searchbar />
+      </div>
+    );
+  }
+}
