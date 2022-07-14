@@ -1,0 +1,1 @@
+export {BtnLoadMore} from './BtnLoadMore'

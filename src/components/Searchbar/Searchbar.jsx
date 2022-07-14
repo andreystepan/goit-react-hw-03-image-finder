@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 export class Searchbar extends Component {
   state = {
     query: '',
+    images: [],
   };
 
   handleChange = e => {
