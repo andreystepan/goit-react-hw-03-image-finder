@@ -1,5 +1,12 @@
 import { Component } from 'react';
 import { toast } from 'react-toastify';
+import { BsSearch } from 'react-icons/bs';
+import {
+  SearchHeader,
+  SearchForm,
+  BtnSearchForm,
+  Input,
+} from './Searchbar.styled';
 
 export class Searchbar extends Component {
   state = {
@@ -25,12 +32,12 @@ export class Searchbar extends Component {
 
   render() {
     return (
-      <header>
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">
-            <span>Search</span>
-          </button>
-          <input
+      <SearchHeader>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <BtnSearchForm type="submit">
+            <BsSearch />
+          </BtnSearchForm>
+          <Input
             onChange={this.handleChange}
             value={this.state.query}
             name="query"
@@ -39,8 +46,8 @@ export class Searchbar extends Component {
             autoFocus
             placeholder="Search images and photos"
           />
-        </form>
-      </header>
+        </SearchForm>
+      </SearchHeader>
     );
   }
 }
