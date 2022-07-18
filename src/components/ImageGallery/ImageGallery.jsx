@@ -3,6 +3,7 @@ import { Component } from 'react';
 import API from '../../API/API';
 import { Loader } from '../Loader';
 import { BtnLoadMore } from 'components/Button';
+import { Modal } from '../Modal';
 
 export class ImageGallery extends Component {
   state = { largeImg: null, images: [], page: 1, loading: false };
@@ -34,13 +35,18 @@ export class ImageGallery extends Component {
 
   handleClickImg = largeImg => {
     this.setState({ largeImg });
+    console.log(largeImg);
   };
 
   loadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
+
+  closeModal = () => {
+    this.setState({ largeImg: null });
+  };
   render() {
-    const { images, loading } = this.state;
+    const { images, loading, largeImg } = this.state;
     const { query } = this.props;
     return (
       <>
@@ -59,6 +65,9 @@ export class ImageGallery extends Component {
         </ul>
 
         <BtnLoadMore onClick={this.loadMore} />
+        {largeImg && (
+          <Modal largeImg={largeImg} query={query} onClose={this.closeModal} />
+        )}
       </>
     );
   }
