@@ -2,10 +2,15 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem';
 
 import { Component } from 'react';
 import API from '../../API/API';
-import { Loader } from '../Loader';
 import { BtnLoadMore } from 'components/Button';
 import { Modal } from '../Modal';
 import { Gallery } from './ImageGallery.styled';
+
+const imgMapper = dataHits => {
+  return dataHits.map(({ id, webformatURL, largeImageURL }) => {
+    return { id, webformatURL, largeImageURL };
+  });
+};
 
 export class ImageGallery extends Component {
   state = { largeImg: null, images: [], page: 1, loading: false };
@@ -22,6 +27,7 @@ export class ImageGallery extends Component {
       return this.getImages(false);
     }
   }
+
   getImages = newQuery => {
     const { query } = this.props;
     // const { page } = this.state;
@@ -31,7 +37,9 @@ export class ImageGallery extends Component {
     API.fetchApi(query, page)
       .then(data =>
         this.setState(prevState => ({
-          images: newQuery ? data.hits : [...prevState.images, ...data.hits],
+          images: newQuery
+            ? imgMapper(data.hits)
+            : [...prevState.images, ...imgMapper(data.hits)],
         }))
       )
       .finally(() => this.setState({ loading: false }));
@@ -49,22 +57,23 @@ export class ImageGallery extends Component {
     this.setState({ largeImg: null });
   };
   render() {
-    const { images, loading, largeImg } = this.state;
+    const { images, largeImg } = this.state;
     const { query } = this.props;
     return (
       <>
-        {loading && <Loader />}
-        <Gallery>
-          {images.map(({ webformatURL, largeImageURL, id }) => (
-            <ImageGalleryItem
-              onClick={this.handleClickImg}
-              query={query}
-              key={id}
-              smallImg={webformatURL}
-              largeImg={largeImageURL}
-            />
-          ))}
-        </Gallery>
+        {images.length > 0 && (
+          <Gallery>
+            {images.map(({ webformatURL, largeImageURL, id }) => (
+              <ImageGalleryItem
+                onClick={this.handleClickImg}
+                query={query}
+                key={id}
+                smallImg={webformatURL}
+                largeImg={largeImageURL}
+              />
+            ))}
+          </Gallery>
+        )}
 
         {images.length > 0 && <BtnLoadMore onClick={this.loadMore} />}
         {largeImg && (
