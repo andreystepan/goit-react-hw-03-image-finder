@@ -6,6 +6,11 @@ import { Overlay, ModalWindow } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends Component {
+  static propTypes = {
+    largeImg: PropTypes.string.isRequired,
+    query: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+  };
   componentDidMount() {
     window.addEventListener('keydown', this.handelKeydown);
   }
@@ -37,9 +42,3 @@ export class Modal extends Component {
     );
   }
 }
-
-Modal.propTypes = {
-  largeImg: PropTypes.string.isRequired,
-  query: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-};

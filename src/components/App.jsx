@@ -38,7 +38,7 @@ export class App extends Component {
 
   getImages = newQuery => {
     const { query } = this.state;
-    // const { page } = this.state;
+
     const page = newQuery ? 1 : this.state.page;
     this.setState({ loading: true });
 
