@@ -73,7 +73,7 @@ export class App extends Component {
     const { loading, images, largeImg, query } = this.state;
     return (
       <div>
-        {loading && <Loader />}
+       
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ToastContainer />
         <ImageGallery
@@ -81,6 +81,7 @@ export class App extends Component {
           images={images}
           onClick={this.handleClickImg}
         />
+         {loading && <Loader />}
 
         {images.length > 0 && <BtnLoadMore onClick={this.loadMore} />}
 
